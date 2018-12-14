@@ -6,14 +6,19 @@ const jpg = "./jpg/"
 
 fs.readdir(png, (err, files) => {
     files.forEach(file => {
-        const tmpUrlPng = png+file
-        const tmpUrlJpg = jpg+file.split(".")[0]+".jpg"
-        let buffer = fs.readFileSync(tmpUrlPng);
-        pngToJpeg({
-            quality: 90
-        })(buffer)
-        .then(output => fs.writeFileSync(tmpUrlJpg, output));
+        if (file != ".gitkeep") {
+            console.log("Process img : " + file)
+            const tmpUrlPng = png + file
+            const tmpUrlJpg = jpg + file.split(".")[0] + ".jpg"
+            let buffer = fs.readFileSync(tmpUrlPng);
+            try {
+                pngToJpeg({
+                        quality: 100
+                    })(buffer)
+                    .then(output => fs.writeFileSync(tmpUrlJpg, output));
+            } catch (err) {
+
+            }
+        }
     });
 })
-
-
